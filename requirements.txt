@@ -3,3 +3,6 @@ Pillow==12.1.0
 mysqlclient==2.2.8
 python-dotenv==1.2.1
 gunicorn
+psycopg2-binary==2.9.10
+dj-database-url==2.3.0
+whitenoise==6.11.0
