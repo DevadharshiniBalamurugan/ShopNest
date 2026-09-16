@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: shopnest-e9v4
+    runtime: python
+    buildCommand: sh build.sh
+    startCommand: gunicorn shopnest.wsgi:application
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: shopnest-e9v4.onrender.com
+      - key: DJANGO_CSRF_TRUSTED_ORIGINS
+        value: https://shopnest-e9v4.onrender.com

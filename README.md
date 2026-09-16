@@ -81,6 +81,31 @@ media/         User and product uploads
 
    Visit `http://127.0.0.1:8000/`.
 
+   ## Deployment
+
+   The SQLite database and `media/` uploads are intentionally ignored by Git. A fresh deployment therefore needs to create its database and seed the catalog during the build. Configure these environment variables on the host:
+
+   ```dotenv
+   DJANGO_SECRET_KEY=use-a-long-random-value
+   DJANGO_DEBUG=False
+   DJANGO_ALLOWED_HOSTS=your-domain.example
+   DJANGO_CSRF_TRUSTED_ORIGINS=https://your-domain.example
+   ```
+
+   Use this as the deployment build command:
+
+   ```bash
+   python manage.py migrate --noinput && python manage.py seed_data && python manage.py collectstatic --noinput
+   ```
+
+   Start the web process with:
+
+   ```bash
+   gunicorn shopnest.wsgi:application
+   ```
+
+   Run the build command again whenever the deployment uses a new empty database. For uploaded product images, configure persistent media storage or copy the `media/` directory to the host; the catalog images included with the demo data are stored in `static/images/products/` and are collected by the build command.
+
 ## MySQL configuration
 
 Create a UTF-8 MySQL database, then set:
